@@ -1,4 +1,0 @@
-[submodule "includes/awesomplete"]
-	path = includes/awesomplete
-	url = https://github.com/LeaVerou/awesomplete
-	branch = gh-pages
