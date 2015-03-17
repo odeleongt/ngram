@@ -21,7 +21,11 @@
 # R project files
 .Rproj.user
 .Rhistory
-.RData
+*.RData
+
+# Ignore raw text data
+data/raw/final
+*.zip
 
 # shinyapps files
 rsconnect
