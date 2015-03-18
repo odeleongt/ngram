@@ -1,6 +1,7 @@
 
 shinyUI(
   bootstrapPage(
+  fixedPage(
     includeCSS("./includes/awesomplete/awesomplete.css"),
     includeScript("./includes/awesomplete/awesomplete.js"),
     includeScript("./includes/remove-branding.js"),
@@ -29,5 +30,5 @@ shinyUI(
       column(
         width = 4,
         textOutput('text')))
-  )
+  ))
 )
