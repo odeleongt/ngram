@@ -1,6 +1,6 @@
 
 shinyServer(
   function(input, output) {
-    output$plot <- renderPlot({ hist(runif(input$n)) })
+    output$text <- renderText({ input$text })
   }
 )
