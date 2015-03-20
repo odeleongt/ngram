@@ -1,3 +1,16 @@
+#------------------------------------------------------------------------------*
+# Prepare environment
+#------------------------------------------------------------------------------*
+
+# Load used packages
+library(package = markdown)
+
+
+
+
+#------------------------------------------------------------------------------*
+# Setup app
+#------------------------------------------------------------------------------*
 
 shinyUI(
   bootstrapPage(
@@ -5,7 +18,7 @@ shinyUI(
     includeCSS("./includes/awesomplete/awesomplete.css"),
     includeScript("./includes/awesomplete/awesomplete.js"),
     includeScript("./includes/remove-branding.js"),
-    div(style="width:100%;height:50px;background:#216699;",
+    div(style="width:100%;min-height:50px;background:#216699;overflow:overlay;",
         span(style=paste0("font-family:\"Open Sans\",\"Helvetica Neue\",",
                           "Arial,sans-serif;font-size:24px;color:#FFF;",
                           "display:inline-block;line-height:50px;"),
@@ -14,21 +27,39 @@ shinyUI(
             tags$object(data="example.svg", type="image/svg+xml",
                         img(src="./img/repo_logo.svg", alt="n-gram",
                             width="50px", height="50px")))),
-    fluidRow(
-      column(
-        width = 4,
-        div(class="form-group shiny-input-container",
-            div(tags$label("Autocomplete")),
-            tags$input(id="text", type="text",
-                       class="awesomplete form-control",
-                       style="width:17em;",
-                       value="", autofocus="true", 'data-multiple'="true",
-                       'data-minchars'="1" , 'data-autofirst'="true",
-                       'data-list'= paste(scan(file = "./data/common-english-words",
-                                               what = "character"), collapse = " "))
-        )),
-      column(
-        width = 4,
-        textOutput('text')))
+    tabsetPanel(
+      selected = "App",
+      tabPanel(
+        title = "Instructions",
+        includeMarkdown("./content/instructions.md")),
+      tabPanel(id = "app",
+        title = "App",
+        includeMarkdown(path = "./content/app.md"),
+        fluidRow(
+          column(
+            width = 4,
+            div(class="form-group shiny-input-container",
+                div(tags$label("Autocomplete")),
+                tags$input(id="text", type="text",
+                           class="awesomplete form-control",
+                           style="width:17em;",
+                           value="", autofocus="true", 'data-multiple'="true",
+                           'data-minchars'="1" , 'data-autofirst'="true",
+                           'data-list'= paste(scan(file = "./data/common-english-words",
+                                                   what = "character"), collapse = " "))
+            )),
+          column(
+            width = 4,
+            textOutput('text')))),
+      tabPanel(
+        title = "About the model",
+        includeMarkdown(path = "./content/about.md")),
+      tabPanel(
+        title = "Components",
+        includeMarkdown(path = "./content/components.md")),
+      tabPanel(
+        title = "Collaborating",
+        includeMarkdown(path = "./content/collaborating.md"))
+    )
   ))
 )
