@@ -14,10 +14,10 @@ library(package = markdown)
 
 shinyUI(
   bootstrapPage(
-  fixedPage(
     includeCSS("./includes/awesomplete/awesomplete.css"),
     includeScript("./includes/awesomplete/awesomplete.js"),
     includeScript("./includes/remove-branding.js"),
+  fixedPage(
     div(style="width:100%;min-height:50px;background:#216699;overflow:overlay;",
         span(style=paste0("font-family:\"Open Sans\",\"Helvetica Neue\",",
                           "Arial,sans-serif;font-size:24px;color:#FFF;",
