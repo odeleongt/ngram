@@ -1,6 +1,6 @@
 
 shinyServer(
   function(input, output) {
-    output$text <- renderText({ input$text })
+    output$text <- renderText({ paste0("Input text: {", input$text, "}") })
   }
 )
