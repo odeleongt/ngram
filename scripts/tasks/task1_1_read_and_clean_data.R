@@ -55,106 +55,18 @@ save(news, blogs, twitter,
 # Basic cleaning tasks
 #------------------------------------------------------------------------------*
 
+# Get function to clean text
+source(file = "./R/clean_text.R")
 
-# Isolate contractions
-punct <- "'([^[:space:]']*)"
-repl <- " \t\\1\t "
-fixed_news <- gsub(pattern = punct, replacement = repl, x = news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = twitter)
+# News
+microbenchmark::microbenchmark(times = 1, fixed_news <- clean_text(news))
 
+# Blogs
+microbenchmark::microbenchmark(times = 1, fixed_blogs <- clean_text(blogs))
 
-# Remove punctuation (keep hashtags)
-punct <- "[^#[:alnum:][:space:]]+"
-repl <- " "
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
+# Twitter
+microbenchmark::microbenchmark(times = 1, fixed_twitter <- clean_text(twitter))
 
-
-# Restore contractions
-punct <- "\t([^\t]*)\t"
-repl <- "'\\1"
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
-# Use generic number marker
-punct <- "[[:space:]]*[0-9]+[[:space:]]*(?R)?"
-repl <- " {digits} "
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news, perl=TRUE)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs, perl=TRUE)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter, perl=TRUE)
-
-
-# Reduce #s single copy
-punct <- "([[:alpha:][]]])?#+"
-repl <- "\\1 #"
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
-# Remove lone #s
-punct <- "(^| )#( |$)"
-repl <- " "
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
-# Reduce spaces single copy
-punct <- "[[:space:]]+"
-repl <- " "
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
-# Remove leading or trailing spaces
-punct <- "(^[[:space:]])|([[:space:]]$)"
-repl <- ""
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
-# Everything to lower case
-fixed_news <- tolower(fixed_news)
-fixed_blogs <- tolower(fixed_blogs)
-fixed_twitter <- tolower(fixed_twitter)
-
-
-# Fix some particular contractions
-
-punct <- "ain 't"
-repl <- "i am not"
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
-punct <- "won 't"
-repl <- "will not"
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
-punct <- "can 't"
-repl <- "can not"
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
-punct <- "n 't"
-repl <- " not"
-fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
-fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
-fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
-
-
+# Save clean texts
 save(fixed_news, fixed_blogs, fixed_twitter,
      file = "./data/pre-proc/intermediate/02_clean_text.RData")
