@@ -23,7 +23,7 @@
 #'   By default assigns to the global environment, see \code{assign} for options.
 #' @export
 #' @examples
-#' #
+#' # Test ngram generation
 #' corpus <- c("This is a test sentence", "This is another test")
 #' tokens <- strsplit(corpus, split = " ")
 #' ngrams(tokens)
