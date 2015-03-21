@@ -150,7 +150,7 @@ fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
 
 
 punct <- "n 't"
-repl <- " n't"
+repl <- " not"
 fixed_news <- gsub(pattern = punct, replacement = repl, x = fixed_news)
 fixed_blogs <- gsub(pattern = punct, replacement = repl, x = fixed_blogs)
 fixed_twitter <- gsub(pattern = punct, replacement = repl, x = fixed_twitter)
