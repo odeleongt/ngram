@@ -37,20 +37,21 @@ shinyUI(
         includeMarkdown(path = "./content/app.md"),
         fluidRow(
           column(
-            width = 4,
+            width = 6,
             div(class="form-group shiny-input-container",
-                div(tags$label("Autocomplete")),
                 tags$input(id="text", type="text",
                            class="awesomplete form-control",
-                           style="width:17em;",
+                           style="width:25em;",
                            value="", autofocus="true", 'data-multiple'="true",
                            'data-minchars'="1" , 'data-autofirst'="true",
                            'data-list'= paste(scan(file = "./data/common-english-words",
                                                    what = "character"), collapse = " "))
             )),
           column(
-            width = 4,
-            textOutput('text')))),
+            width = 6,
+            wellPanel(
+              div(tags$label("Input text")),
+              textOutput('text'))))),
       tabPanel(
         title = "About the model",
         includeMarkdown(path = "./content/about.md")),
