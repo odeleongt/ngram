@@ -24,6 +24,41 @@ clean_text <- function(text){
   repl <- " "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
+  # Remove lone apostrophes
+  punct <- "[[:space:]]\t[^[:alpha:]]*\t[[:space:]]"
+  repl <- " "
+  fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
+  
+  # Remove hashtags
+  punct <- "[[:space:]]*#[^[:space:]]*"
+  repl <- " "
+  fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
+  
+  # Tag dates
+  months <- c("January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December")
+  months <- paste0("(", paste(months, collapse="|"), ")")
+  days <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+           "Saturday", "Sunday")
+  days <- paste0("(", paste(days, collapse="|"), ")")
+  ordinal <- c("st", "nd", "rd", "th")
+  ordinal <- paste0("(", paste(ordinal, collapse="|"), ")")
+  
+  punct <- paste0("((", days, "[[:space:]]+", ")|",
+                  "(", months, "[[:space:]]+", "))+",
+                  "(the[[:space:]]+)?",
+                  "([0-9]+([[:space:]]*", ordinal, "[. ])?)?",
+                  "([[:space:]]*[0-9]+([[:alpha:]]+)?)*")
+  repl <- " {date} "
+  fixed_text <- gsub(pattern = punct, replacement = repl,
+                     x = fixed_text, ignore.case = TRUE)
+  
+  # Tag addresses
+  punct <- "[0-9].+([Ss]treet| [Ss]t[. ]|blvd)[[:space:]]*[0-9]*"
+  repl <- " {address} "
+  fixed_text <- gsub(pattern = punct, replacement = repl,
+                     x = fixed_text, ignore.case = TRUE)
+  
   # Restore contractions
   punct <- "\t([^\t]*)\t"
   repl <- "'\\1"
@@ -33,16 +68,6 @@ clean_text <- function(text){
   punct <- "[[:space:]]*[0-9]+[[:space:]]*(?R)?"
   repl <- " {digits} "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text, perl=TRUE)
-  
-  # Reduce #s single copy
-  punct <- "([[:alpha:][]]])?#+"
-  repl <- "\\1 #"
-  fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
-  
-  # Remove lone #s
-  punct <- "(^| )#( |$)"
-  repl <- " "
-  fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
   # Reduce spaces single copy
   punct <- "[[:space:]]+"
@@ -77,6 +102,11 @@ clean_text <- function(text){
   repl <- " not"
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text,
                      fixed = TRUE)
+  
+  # Remove lone non alpha characters
+  punct <- "[[:space:]]*[^[:alpha:] {}][[:space:]]*"
+  repl <- " "
+  fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
   # Returned the fixed text
   return(fixed_text)
