@@ -49,5 +49,5 @@ microbenchmark::microbenchmark(
 
 
 # Save
-save(list = grep("n[1-3]", ls(), value = TRUE),
+save(list = grep(paste0("n[1-", param, "]"), ls(), value = TRUE),
      file = "./data/processed/02_ngrams.RData")
