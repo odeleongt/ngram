@@ -54,8 +54,11 @@ clean_text <- function(text){
                      x = fixed_text, ignore.case = TRUE)
   
   # Tag addresses
-  punct <- "[0-9].+([Ss]treet| [Ss]t[. ]|blvd)[[:space:]]*[0-9]*"
-  repl <- " {address} "
+  punct <- paste0("( on )*",
+                  "[0-9]+[[:alpha:][:space:]]*",
+                  "([[:alnum:]]+[[:space:]]+){0,3}",
+                  "([Ss]treet| [Ss]t[. ]|blvd)[[:space:]]*[0-9]*")
+  repl <- "\\1 {address} "
   fixed_text <- gsub(pattern = punct, replacement = repl,
                      x = fixed_text, ignore.case = TRUE)
   
