@@ -20,12 +20,12 @@ clean_text <- function(text){
   fixed_text <- gsub(pattern = punct, replacement = repl, x = text)
   
   # Remove punctuation (keep hashtags)
-  punct <- "[^#[:alnum:][:space:]]+"
+  punct <- "[^#a-zA-Z0-9[:space:]]+"
   repl <- " "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
   # Remove lone apostrophes
-  punct <- "[[:space:]]\t[^[:alpha:]]*\t[[:space:]]"
+  punct <- "[[:space:]]\t[^a-zA-Z]*\t[[:space:]]"
   repl <- " "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
@@ -48,15 +48,15 @@ clean_text <- function(text){
                   "(", months, "[[:space:]]+", "))+",
                   "(the[[:space:]]+)?",
                   "([0-9]+([[:space:]]*", ordinal, "[. ])?)?",
-                  "([[:space:]]*[0-9]+([[:alpha:]]+)?)*")
+                  "([[:space:]]*[0-9]+([a-zA-Z]+)?)*")
   repl <- " {date} "
   fixed_text <- gsub(pattern = punct, replacement = repl,
                      x = fixed_text, ignore.case = TRUE)
   
   # Tag addresses
   punct <- paste0("( on )*",
-                  "[0-9]+[[:alpha:][:space:]]*",
-                  "([[:alnum:]]+[[:space:]]+){0,3}",
+                  "[0-9]+[a-zA-Z[:space:]]*",
+                  "([a-zA-Z0-9]+[[:space:]]+){0,3}",
                   "([Ss]treet| [Ss]t[. ]|blvd)[[:space:]]*[0-9]*")
   repl <- "\\1 {address} "
   fixed_text <- gsub(pattern = punct, replacement = repl,
@@ -107,7 +107,7 @@ clean_text <- function(text){
                      fixed = TRUE)
   
   # Remove lone non alpha characters
-  punct <- "[[:space:]]*[^[:alpha:] {}][[:space:]]*"
+  punct <- "[[:space:]]*[^a-zA-Z {}][[:space:]]*"
   repl <- " "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
