@@ -14,10 +14,14 @@
 #' corpus <- c("This is a test sentence", "This is another test")
 #' clean <- clean_text(corpus)
 clean_text <- function(text){
+  # Separate sentences
+  fixed_text <- unlist(stringi::stri_split(text, regex = " ?[.;:!?()]+ ?",
+                                           omit_empty = TRUE))
+  
   # Isolate contractions
   punct <- "'([^[:space:]']*)"
   repl <- " \t\\1\t "
-  fixed_text <- gsub(pattern = punct, replacement = repl, x = text)
+  fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
   # Remove punctuation (keep hashtags)
   punct <- "[^#a-zA-Z0-9[:space:]]+"
