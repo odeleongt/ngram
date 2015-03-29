@@ -1,0 +1,33 @@
+---
+title: "Text prediction milestone report"
+date: "March 29, 2015"
+output: html_document
+---
+
+
+```{r setup_document, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+library(package = ggplot2)
+library(package = tidyr)
+library(package = dplyr)
+
+knitr::opts_knit$set(root.dir = "..")
+```
+
+# Executive summary
+
+
+
+# Details about the project
+
+## Descriptive analysis of the dataset
+
+### Basic summaries
+
+
+### Features in the data
+
+
+
+## Plans for prediction algorithm and shiny app
+
+# References
