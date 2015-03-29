@@ -21,6 +21,7 @@ and plans on application implementation are also described to obtain feedback fr
 Briefly, the project aims to produce an application which predicts the next word in a text input provided by the user.
 It is expected that the application will have enough accuracy to fulfil user expectations,
 and good response times to provide an adequate user experience.
+Some technical terms are briefly explained for clarity.
 
 ---
 
