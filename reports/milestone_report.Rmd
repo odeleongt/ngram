@@ -147,6 +147,15 @@ some of which will be discussed in the section detailing the plans
 
 #### Features in the data
 
+The exploratory data analysis of the generated tokens and n-grams shows some interesting information about the text.
+Typical English phrases contain mostly words which serve some gramatical function
+(_e.g._ connecting elements, like articles),
+which are commonly termed _stop words_ in NLP.
+The stop words are usually removed for language modelling,
+because otherwise would dominate the predictions since they are very common,
+but were preserved for this application due to the implementation of additional NLP techniques
+which allow to level them with other words which convey more meaning
+and are also common in the dataset (such as nouns or verbs).
 
 
 
