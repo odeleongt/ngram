@@ -26,6 +26,21 @@ and good response times to provide an adequate user experience.
 
 ## Details about the project
 
+Text prediction of user input can be valuable to improve user experience in platforms with limited or difficult text prediction facilities,
+such as mobile systems.
+An application can be programmed to predict text input using techniques known as _**N**atural **L**anguage **P**rocessing_.
+NLP uses large samples of actual language use to develop models
+which can predict different features of the language in varying degrees of accuracy and complexity.
+
+This project uses English language samples from digital media (blogs, news and Twitter)
+in order to predict simple English text input.
+The following sections describe the datasets used for the project,
+highlight some interesting features and
+present plans for the final model and application.
+
+
+
+
 ### Descriptive analysis of the dataset
 
 #### Basic summaries
