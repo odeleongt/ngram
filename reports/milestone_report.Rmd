@@ -1,7 +1,11 @@
 ---
 title: "Text prediction milestone report"
+output:
+  html_document:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 5
 date: "March 29, 2015"
-output: html_document
 ---
 
 
@@ -156,6 +160,29 @@ because otherwise would dominate the predictions since they are very common,
 but were preserved for this application due to the implementation of additional NLP techniques
 which allow to level them with other words which convey more meaning
 and are also common in the dataset (such as nouns or verbs).
+Figure 1 shows the count of the most common 3-grams found in the data:
+
+
+```{r plot_common_n3, width=6, height=8, echo=FALSE, fig.cap="**Figure 1:** Counts of the 10 most common 3-grams for each data source. Counts are presented in logarithmic scale to show detail at lower counts. 3-grams are arranged in descending order (most common 3-grams at the top of each panel)."}
+# Get the data
+load(file = "./data/processed/n3_report.RData")
+
+n3 <- n3 %>%
+  arrange(N) %>%
+  mutate(text = factor(text, levels = unique(text)))
+
+ggplot(data = n3, aes(y = text, x = N)) +
+  geom_point() +
+  scale_x_log10(breaks = c(6000, 10000, 15000, 20000, max(n3$N))) +
+  labs(x = "Number of times the 3-gram was observed",
+       y = "3-gram") +
+  facet_grid(source ~ ., scales = "free_y", space = "free_y")
+```
+
+
+
+
+</br>
 
 
 
