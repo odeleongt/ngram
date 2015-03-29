@@ -63,24 +63,32 @@ Table: **File description:** Some characteristics of the data files
 
 The data was imported into the R statistical environment,
 processed to remove unwanted information
-(garbled text, non-English characters, punctuation signs and extra space),
+<span style="color: grey">
+  (non-English characters, punctuation signs and extra space),
+</span>
 reduce unnecessary details which could reduce prediction accuracy
-(specific dates, addresses and groups of numbers replaced by generic markers)
+<span style="color: grey">
+  (specific dates, addresses and groups of numbers replaced by generic markers)
+</span>
 and clean the data to ease further analyses and modelling
-(use only lower case characters and store each sentence separately).
+<span style="color: grey">
+  (use only lower case characters and store each sentence separately)
+</span>.
 Follow an example of how some typical English text would change when prepared for analysis:
 
 > **Sample:**  
-> _"We shall meet in the place where there is no darkness"_
-> - great book! read it 3 times last February
-> at NYPL on 5th and 42nd Street New York, NY, 10018.`
-
-```
-Processed:
-[1] we shall meet in the place where there is no darkness
-[2] great book
-[3] read it {digits} times last {date} at {address}
-```
+> <small>
+> <b><i>"We shall meet in the place where there is no darkness"</i></b>
+> <span> - great book! read it 3 times last February
+> at NYPL on 5th and 42nd Street NY, 10018.</span>
+> </small>
+>
+> ```
+> Processed:
+> [1] we shall meet in the place where there is no darkness
+> [2] great book
+> [3] read it {digits} times last {date} at {address}
+> ```
 
 </br>
 
