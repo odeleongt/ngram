@@ -103,8 +103,8 @@ Follow an example of how some typical English text would change when prepared fo
 
 
 
-### Plans for prediction algorithm and shiny app
 
 ---
 
-## References
+### Plans for prediction algorithm and shiny app
+
