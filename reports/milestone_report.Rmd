@@ -13,21 +13,21 @@ library(package = dplyr)
 knitr::opts_knit$set(root.dir = "..")
 ```
 
-# Executive summary
+## Executive summary
 
 
 
-# Details about the project
+## Details about the project
 
-## Descriptive analysis of the dataset
+### Descriptive analysis of the dataset
 
-### Basic summaries
-
-
-### Features in the data
+#### Basic summaries
 
 
+#### Features in the data
 
-## Plans for prediction algorithm and shiny app
 
-# References
+
+### Plans for prediction algorithm and shiny app
+
+## References
