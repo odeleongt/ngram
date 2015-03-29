@@ -43,6 +43,50 @@ present plans for the final model and application.
 
 ### Descriptive analysis of the dataset
 
+The English data (or corpus) come from [HC Corpora](http://www.corpora.heliohost.org/) and are available for download.
+Details about the corpus are available [through the provider](http://www.corpora.heliohost.org/aboutcorpus.html).
+The corpus is comprised by three files, containing texts obtained from news, blogs and Twitter feeds.
+Follows a table describing the files:
+
+--------------------------------------------------------------------------------
+Source   File name               Size (MB)     Lines        Words     Characters
+-------- --------------------- ----------- --------- ------------ --------------
+Blogs     `en_US.blogs.txt`      200.42      899 288   37 334 114    208 623 085
+
+News      `en_US.news.txt`       196.28    1 010 242   34 365 936    205 243 643
+
+Twitter   `en_US.twitter.txt`    159.36    2 360 148   30 359 852    166 843 164
+--------------------------------------------------------------------------------
+
+Table: **File description:** Some characteristics of the data files
+
+
+The data was imported into the R statistical environment,
+processed to remove unwanted information
+(garbled text, non-English characters, punctuation signs and extra space),
+reduce unnecessary details which could reduce prediction accuracy
+(specific dates, addresses and groups of numbers replaced by generic markers)
+and clean the data to ease further analyses and modelling
+(use only lower case characters and store each sentence separately).
+Follow an example of how some typical English text would change when prepared for analysis:
+
+> **Sample:**  
+> _"We shall meet in the place where there is no darkness"_
+> - great book! read it 3 times last February
+> at NYPL on 5th and 42nd Street New York, NY, 10018.`
+
+```
+Processed:
+[1] we shall meet in the place where there is no darkness
+[2] great book
+[3] read it {digits} times last {date} at {address}
+```
+
+</br>
+
+
+
+
 #### Basic summaries
 
 
