@@ -22,6 +22,7 @@ Briefly, the project aims to produce an application which predicts the next word
 It is expected that the application will have enough accuracy to fulfil user expectations,
 and good response times to provide an adequate user experience.
 
+---
 
 ## Details about the project
 
@@ -35,5 +36,7 @@ and good response times to provide an adequate user experience.
 
 
 ### Plans for prediction algorithm and shiny app
+
+---
 
 ## References
