@@ -98,6 +98,52 @@ Follow an example of how some typical English text would change when prepared fo
 
 #### Basic summaries
 
+In NLP, each word or informative group of characters is regarded as a _token_;
+tokens are grouped into _**n**-grams_, which are _n_ contiguous tokens, with _n_ varying usually between `1` and `4`;
+n-grams are then used to estimate the probability of a given phrase,
+which allows to use `n-1` tokens from the input to predict the next word
+(last token in an n-gram).
+The clean texts were further processed to produce groups of tokens,
+and n-grams of length `1` to `4`.
+For example, the 3-grams from the first sample sentence above would be:
+
+> **Sample:**
+> <small><i>we shall meet in the place where there is no darkness</i>  
+> <b>3-grams</b>: `we shall meet`, `shall meet in`, `meet in the`,
+> `in the place`, `the place where`, `place where there`, `where there is`,
+> `there is no`, `is no darkness`
+> </small>
+
+
+Follows a table showing some basic summaries for the generated tokens and n-grams:
+
+--------------------------------------------------------------------------------
+Source       Total  Median tokens  Median chars  Number of  Number of  Number of
+            tokens   per sentence     per token    2-grams    3-grams    4-grams
+------- ---------- -------------- ------------- ---------- ---------- ----------
+Blogs   38 273 316             11             4  5 362 812 16 087 952 23 724 661
+
+News    35 420 084             12             4  5 325 622 15 676 714 22 380 268
+
+Twitter 30 771 302              6             4  4 030 805 10 605 972 14 170 541
+--------------------------------------------------------------------------------
+
+Table: **Basic summaries:** Some general information about the English text data
+
+
+As is reflected by the numbers in the previous table,
+the dataset used to develop the application is large
+(taking around 5GB of memory when loaded completely)
+and the information obtained from each source varies considerably
+(using number of n-grams as a proxy).
+This results in drawbacks for application implementation,
+some of which will be discussed in the section detailing the plans
+(at the end of this document).
+
+</br>
+
+
+
 
 #### Features in the data
 
