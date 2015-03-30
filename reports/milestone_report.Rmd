@@ -1,0 +1,234 @@
+---
+title: "Text prediction milestone report"
+author: "Oscar de León"
+date: "March 29, 2015"
+output:
+  html_document:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 5
+    includes:
+      before_body: ../reports/google-analytics.html
+  pdf_document:
+    fig_caption: yes
+    fig_height: 7
+    fig_width: 5
+---
+
+
+```{r setup_document, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+library(package = ggplot2)
+library(package = tidyr)
+library(package = dplyr)
+
+knitr::opts_knit$set(root.dir = "..")
+```
+
+## Executive summary
+
+This report describes initial work performed to produce an English text prediction application.
+It includes a basic description of the data used to develop the prediction algorithm,
+and plans on application implementation are also described to obtain feedback from the reviewer.
+Briefly, the project aims to produce an application which predicts the next word in a text input provided by the user.
+It is expected that the application will have enough accuracy to fulfil user expectations,
+and good response times to provide an adequate user experience.
+Some technical terms are briefly explained for clarity.
+
+---
+
+## Details about the project
+
+Text prediction of user input can be valuable to improve user experience in platforms with limited or difficult text prediction facilities,
+such as mobile systems.
+An application can be programmed to predict text input using techniques known as _**N**atural **L**anguage **P**rocessing_.
+NLP uses large samples of actual language use to develop models
+which can predict different features of the language in varying degrees of accuracy and complexity.
+
+This project uses English language samples from digital media (blogs, news and Twitter)
+in order to predict simple English text input.
+The following sections describe the datasets used for the project,
+highlight some interesting features and
+present plans for the final model and application.
+
+
+
+
+### Descriptive analysis of the dataset
+
+The English data (or corpus) come from [HC Corpora](http://www.corpora.heliohost.org/) and are available for download.
+Details about the corpus are available [through the provider](http://www.corpora.heliohost.org/aboutcorpus.html).
+The corpus is comprised by three files, containing texts obtained from news, blogs and Twitter feeds.
+Follows a table describing the files:
+
+--------------------------------------------------------------------------------
+Source   File name               Size (MB)     Lines        Words     Characters
+-------- --------------------- ----------- --------- ------------ --------------
+Blogs     `en_US.blogs.txt`      200.42      899 288   37 334 114    208 623 085
+
+News      `en_US.news.txt`       196.28    1 010 242   34 365 936    205 243 643
+
+Twitter   `en_US.twitter.txt`    159.36    2 360 148   30 359 852    166 843 164
+--------------------------------------------------------------------------------
+
+Table: **File description:** Some characteristics of the data files
+
+
+The data was imported into the R statistical environment,
+processed to remove unwanted information
+<span style="color: grey">
+  (non-English characters, punctuation signs and extra space),
+</span>
+reduce unnecessary details which could reduce prediction accuracy
+<span style="color: grey">
+  (specific dates, addresses and groups of numbers replaced by generic markers)
+</span>
+and clean the data to ease further analyses and modelling
+<span style="color: grey">
+  (use only lower case characters and store each sentence separately)
+</span>.
+Follow an example of how some typical English text would change when prepared for analysis:
+
+
+\clearpage
+
+> **Sample:**  
+> <small>
+> <b><i>"We shall meet in the place where there is no darkness"</i></b>
+> <span> - great book! read it 3 times last February
+> at NYPL on 5th and 42nd Street NY, 10018.</span>
+> </small>
+>
+> ```
+> Processed:
+> [1] we shall meet in the place where there is no darkness
+> [2] great book
+> [3] read it {digits} times last {date} at {address}
+> ```
+
+</br>
+
+
+
+
+#### Basic summaries
+
+In NLP, each word or informative group of characters is regarded as a _token_;
+tokens are grouped into _**n**-grams_, which are _n_ contiguous tokens, with _n_ varying usually between `1` and `4`;
+n-grams are then used to estimate the probability of a given phrase,
+which allows to use `n-1` tokens from the input to predict the next word
+(last token in an n-gram).
+The clean texts were further processed to produce groups of tokens,
+and n-grams of length `1` to `4`.
+For example, the 3-grams from the first sample sentence above would be:
+
+> **Sample:**
+> <small><i>we shall meet in the place where there is no darkness</i>  
+> <b>3-grams</b>: `we shall meet`, `shall meet in`, `meet in the`,
+> `in the place`, `the place where`, `place where there`, `where there is`,
+> `there is no`, `is no darkness`
+> </small>
+
+
+Follows a table showing some basic summaries for the generated tokens and n-grams:
+
+--------------------------------------------------------------------------------
+Source       Total  Median tokens  Median chars  Number of  Number of  Number of
+            tokens   per sentence     per token    2-grams    3-grams    4-grams
+------- ---------- -------------- ------------- ---------- ---------- ----------
+Blogs   38 273 316             11             4  5 362 812 16 087 952 23 724 661
+
+News    35 420 084             12             4  5 325 622 15 676 714 22 380 268
+
+Twitter 30 771 302              6             4  4 030 805 10 605 972 14 170 541
+--------------------------------------------------------------------------------
+
+Table: **Basic summaries:** Some general information about the English text data
+
+
+As is reflected by the numbers in the previous table,
+the dataset used to develop the application is large
+(taking around 5GB of memory when loaded completely)
+and the information obtained from each source varies considerably
+(using number of n-grams as a proxy).
+This results in drawbacks for application implementation,
+some of which will be discussed in the section detailing the plans
+(at the end of this document).
+
+</br>
+
+
+
+
+#### Features in the data
+
+The exploratory data analysis of the generated tokens and n-grams shows some interesting information about the text.
+Typical English phrases contain mostly words which serve some grammatical function
+(_e.g._ connecting elements, like articles),
+which are commonly termed _stop words_ in NLP.
+The stop words are usually removed for language modelling,
+because otherwise would dominate the predictions since they are very common,
+but were preserved for this application due to the implementation of additional NLP techniques
+which allow to level them with other words which convey more meaning
+and are also common in the dataset (such as nouns or verbs).
+Figure 1 shows the count of the most common 3-grams found in the data:
+
+
+```{r plot_common_n3, width=6, height=8, echo=FALSE, fig.cap="**Figure 1:** Counts of the 10 most common 3-grams for each data source. Counts are presented in logarithmic scale to show detail at lower counts. 3-grams are arranged in descending order (most common 3-grams at the top of each panel)."}
+# Get the data
+load(file = "./data/processed/n3_report.RData")
+
+n3 <- n3 %>%
+  arrange(N) %>%
+  mutate(text = factor(text, levels = unique(text)))
+
+ggplot(data = n3, aes(y = text, x = N)) +
+  geom_point() +
+  scale_x_log10(breaks = c(6000, 10000, 15000, 20000, max(n3$N))) +
+  labs(x = "Number of times the 3-gram was observed",
+       y = "3-gram") +
+  facet_grid(source ~ ., scales = "free_y", space = "free_y")
+```
+
+
+
+
+</br>
+
+
+
+
+---
+
+\clearpage
+
+### Plans for prediction algorithm and shiny app
+
+Based on the prepared tokens and n-grams,
+a shiny application will be developed and published in the [shinyapps.io](javascript:void(0)) platform.
+This application will receive plain text input from the user (in a text box), and output the predicted next word.
+The prediction will be performed based on a 4-gram model, with the following additional features:
+
+- **Back-off:** use lower-n-grams when no data is available (smoothing technique)
+- **Discounting:** reduce the likelihood of very low count n-grams
+- **Bag of words:** increase the coverage by using pairs of words co-occurring in a sentence (regardless of order or distance), in addition to n-grams (n contiguous words)
+
+For now a complete dictionary has been used for testing and initial <span title="Quiz 2 (10/10, two tries) and quiz 3 (7/10, one try)">accuracy assessment</span> but, due to the limited availability of resources for the hosted app, a reduced dictionary will be used. Figure 2 depicts the dictionary size (MB of RAM used when loaded) given the minimum counts to include a particular n-gram:
+
+
+![**Figure 2:** Dictionary size given minimum n-gram count](../images/MG_ngram_dict.svg)
+
+Coverage and accuracy of the dictionaries compressed to different sizes has not been evaluated, but is considered in the following steps. Since high load time can be a factor which discourage users from adoption, the use of an index based dictionary will be considered, to avoid loading all the data and only read the entries of interest when needed.
+
+Besides the language model features described above, the application will provide the following features to improve user experience:
+
+- Auto complete for the input text box, to ease typing when no prediction is requested (shows a list of common words which start with the letters already typed in)
+- List of other possible predictions, to provide alternatives in case the main prediction is not satisfactory
+- Option to download the log file of the user's session, to examine closely the app in action.
+
+
+
+
+### Suggestions and collaboration
+
+Suggestions and feedback are welcome, and should be provided in the evaluation form. Specific ideas regarding app implementation or technical concerns can be recorded as [issues](https://bitbucket.org/odeleongt/ngram/issues/new) in the app's repository. Thanks for your time and consideration.
+
