@@ -7,6 +7,10 @@ output:
     fig_caption: yes
     fig_height: 6
     fig_width: 5
+  pdf_document:
+    fig_caption: yes
+    fig_height: 7
+    fig_width: 5
 ---
 
 
@@ -81,6 +85,9 @@ and clean the data to ease further analyses and modelling
   (use only lower case characters and store each sentence separately)
 </span>.
 Follow an example of how some typical English text would change when prepared for analysis:
+
+
+\clearpage
 
 > **Sample:**  
 > <small>
@@ -187,7 +194,10 @@ ggplot(data = n3, aes(y = text, x = N)) +
 
 
 
+
 ---
+
+\clearpage
 
 ### Plans for prediction algorithm and shiny app
 
