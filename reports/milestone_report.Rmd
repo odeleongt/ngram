@@ -191,3 +191,28 @@ ggplot(data = n3, aes(y = text, x = N)) +
 
 ### Plans for prediction algorithm and shiny app
 
+Based on the prepared tokens and n-grams,
+a shiny application will be developed and published in the [shinyapps.io](javascript:void(0)) platform.
+This application will receive plain text input from the user (in a text box), and output the predicted next word.
+The prediction will be performed based on a 4-gram model, with the following additional features:
+
+- **Back-off:** use lower-n-grams when no data is available (smoothing technique)
+- **Discounting:** reduce the likelihood of very low count n-grams
+- **Bag of words:** increase the coverage by using pairs of words co-occurring in a sentence (regardless of order or distance), in addition to n-grams (n contiguous words)
+
+For now a complete dictionary has been used for testing and initial <span title="Quizz 2 (10/10, two tries) and quizz 3 (7/10, one try)">accuracy asessment</span> but, due to the limmited availability of resources for the hosted app, a reduced dictionary will be used. Figure 2 depicts the dictionary size (MB of RAM used when loaded) given the minimun counts to include a particular n-gram:
+
+
+![**Figure 2:** Dictionary size given minimum n-gram count](../images/MG_ngram_dict.svg)
+
+Coverage and accuracy of the dictionaries compressed to different sizes has not been evaluated, but is considered in the following steps. Since high load time can be a factor which discourage users from adoption, the use of an index based dictionary will be considered, to avoid loading all the data and only read the entries of interest when needed.
+
+Besides the language model features described above, the application will provide the following features to improve user experience:
+
+- Autocomplete for the input text box, to ease typing when no prediction is requested (shows a list of common words which start with the letters already typed in)
+- List of other possible predictions, to provide alternatives in case the main predicion is not satisfactory
+- Option to download the log file of the user's session, to examine closely the app in action.
+
+
+
+
