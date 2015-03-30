@@ -160,7 +160,7 @@ some of which will be discussed in the section detailing the plans
 #### Features in the data
 
 The exploratory data analysis of the generated tokens and n-grams shows some interesting information about the text.
-Typical English phrases contain mostly words which serve some gramatical function
+Typical English phrases contain mostly words which serve some grammatical function
 (_e.g._ connecting elements, like articles),
 which are commonly termed _stop words_ in NLP.
 The stop words are usually removed for language modelling,
@@ -210,7 +210,7 @@ The prediction will be performed based on a 4-gram model, with the following add
 - **Discounting:** reduce the likelihood of very low count n-grams
 - **Bag of words:** increase the coverage by using pairs of words co-occurring in a sentence (regardless of order or distance), in addition to n-grams (n contiguous words)
 
-For now a complete dictionary has been used for testing and initial <span title="Quizz 2 (10/10, two tries) and quizz 3 (7/10, one try)">accuracy asessment</span> but, due to the limmited availability of resources for the hosted app, a reduced dictionary will be used. Figure 2 depicts the dictionary size (MB of RAM used when loaded) given the minimun counts to include a particular n-gram:
+For now a complete dictionary has been used for testing and initial <span title="Quiz 2 (10/10, two tries) and quiz 3 (7/10, one try)">accuracy assessment</span> but, due to the limited availability of resources for the hosted app, a reduced dictionary will be used. Figure 2 depicts the dictionary size (MB of RAM used when loaded) given the minimum counts to include a particular n-gram:
 
 
 ![**Figure 2:** Dictionary size given minimum n-gram count](../images/MG_ngram_dict.svg)
@@ -219,8 +219,8 @@ Coverage and accuracy of the dictionaries compressed to different sizes has not 
 
 Besides the language model features described above, the application will provide the following features to improve user experience:
 
-- Autocomplete for the input text box, to ease typing when no prediction is requested (shows a list of common words which start with the letters already typed in)
-- List of other possible predictions, to provide alternatives in case the main predicion is not satisfactory
+- Auto complete for the input text box, to ease typing when no prediction is requested (shows a list of common words which start with the letters already typed in)
+- List of other possible predictions, to provide alternatives in case the main prediction is not satisfactory
 - Option to download the log file of the user's session, to examine closely the app in action.
 
 
@@ -228,5 +228,5 @@ Besides the language model features described above, the application will provid
 
 ### Suggestions and collaboration
 
-Suggestions and feedback are wellcome, and should be provided in the evaluation form. Specific ideas regarding app implementation or technical concerns can be recorded as [issues](https://bitbucket.org/odeleongt/ngram/issues/new) in the app's repository. Thanks for your time and consideration.
+Suggestions and feedback are welcome, and should be provided in the evaluation form. Specific ideas regarding app implementation or technical concerns can be recorded as [issues](https://bitbucket.org/odeleongt/ngram/issues/new) in the app's repository. Thanks for your time and consideration.
 
