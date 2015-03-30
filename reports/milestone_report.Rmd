@@ -216,3 +216,7 @@ Besides the language model features described above, the application will provid
 
 
 
+### Suggestions and collaboration
+
+Suggestions and feedback are wellcome, and should be provided in the evaluation form. Specific ideas regarding app implementation or technical concerns can be recorded as [issues](https://bitbucket.org/odeleongt/ngram/issues/new) in the app's repository. Thanks for your time and consideration.
+
