@@ -17,9 +17,14 @@ library(package = stringi)
 rm(list = ls()[!grepl("fixed", ls())])
 
 # Split tokens
-token_news <- stri_split(str = fixed_news, regex = "[[:space:]]+")
-token_blogs <- stri_split(str = fixed_blogs, regex = "[[:space:]]+")
-token_twitter <- stri_split(str = fixed_twitter, regex = "[[:space:]]+")
+token_news <- stri_split(str = fixed_news, regex = "[[:space:]]+", omit_empty = TRUE)
+token_blogs <- stri_split(str = fixed_blogs, regex = "[[:space:]]+", omit_empty = TRUE)
+token_twitter <- stri_split(str = fixed_twitter, regex = "[[:space:]]+", omit_empty = TRUE)
+
+# Remove empty elements
+token_news <- token_news[sapply(token_news, length) > 0]
+token_blogs <- token_blogs[sapply(token_blogs, length) > 0]
+token_twitter <- token_twitter[sapply(token_twitter, length) > 0]
 
 # Save tokens
 save(token_news, file = "./data/pre-proc/01_token_news.Rdata")

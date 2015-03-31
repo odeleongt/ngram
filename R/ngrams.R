@@ -36,6 +36,7 @@ ngrams <- function(tokens, maxn = 3L, tag = "gram", where = search()[1]){
   # Get individual tokens into a data.table as the stems
   # NAs are used to align the unigram column to efficiently bind next n-1 tokens
   tokens <- data.table(stem = unlist(lapply(tokens, c, rep(NA, maxn-1))))
+  tokens <- tokens[stem != ""]
   setnames(tokens, "stem", ns[1])
   
   # Bind lagged tokens to stem.
