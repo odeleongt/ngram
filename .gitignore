@@ -1,3 +1,6 @@
+# Ignore api key
+thesaurus-api-key
+
 # Output files
 *.pdf
 *.*html*
@@ -22,6 +25,8 @@
 .Rproj.user
 .Rhistory
 *.RData
+*.rds
+*.ffdata
 
 # Ignore raw text data
 data/raw/final
