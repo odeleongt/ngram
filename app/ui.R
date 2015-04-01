@@ -25,7 +25,8 @@ shinyUI(
              class="pull-left", "n-gram predictor"),
         div(class="pull-right", style="width:50px",
             tags$object(data="example.svg", type="image/svg+xml",
-                        img(src="./img/repo_logo.svg", alt="n-gram",
+                        img(onload="clear_branding()",
+                            src="./img/repo_logo.svg", alt="n-gram",
                             width="50px", height="50px")))),
     tabsetPanel(
       selected = "App",
