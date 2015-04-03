@@ -6,6 +6,7 @@
 library(package = dplyr)
 library(package = data.table)
 library(package = ff)
+library(package == ffbase)
 
 # All n-grams
 load(file = "./data/processed/02_ngrams_all.RData")
@@ -224,7 +225,7 @@ n4_factor <- copy(n4_index_top)
 
 n4_factor[index, n3:=level, allow.cartesian = TRUE]
 n4_factor$n3 <- as.integer(n4_factor$n3)
-setkey(n4_factor, n1)
+setkey(n4_factor, n2)
 n4_factor[index, n2:=level, allow.cartesian = TRUE]
 n4_factor$n2 <- as.integer(n4_factor$n2)
 setkey(n4_factor, n1)
