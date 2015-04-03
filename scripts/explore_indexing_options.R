@@ -82,19 +82,19 @@ format(object.size(n1_index) - object.size(n1_all), units="Mb")
 
 
 n2_index <- n2_all[n0 %in% index$word & n1 %in% index$word]
-setkey(n2_index, n1)
+setkey(n2_index, n1, n0)
 format(object.size(n2_index) - object.size(n2_all), units="Mb")
 
 
 
 n3_index <- n3_all[n0 %in% index$word & n1 %in% index$word & n2 %in% index$word]
-setkey(n3_index, n2, n1)
+setkey(n3_index, n2, n1, n0)
 format(object.size(n3_index) - object.size(n3_all), units="Mb")
 
 
 
 n4_index <- n4_all[n0 %in% index$word & n1 %in% index$word & n2 %in% index$word & n3 %in% index$word]
-setkey(n4_index, n3, n2, n1)
+setkey(n4_index, n3, n2, n1, n0)
 format(object.size(n4_index) - object.size(n4_all), units="Mb")
 
 
