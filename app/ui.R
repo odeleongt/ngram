@@ -64,7 +64,10 @@ shinyUI(
         includeMarkdown(path = "./content/collaborating.md")),
       tabPanel(
         title = "About the author",
-        includeMarkdown(path = "./content/about_author.md"))
+        includeMarkdown(path = "./content/about_author.md")),
+      tabPanel(
+        title = "Acknowledgments",
+        includeMarkdown(path = "./content/acknowledgments.md"))
     )
   ))
 )
