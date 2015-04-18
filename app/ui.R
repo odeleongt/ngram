@@ -14,6 +14,7 @@ library(package = markdown)
 
 shinyUI(
   bootstrapPage(
+    includeCSS("./includes/maciej-text-width.css"),
     includeCSS("./includes/awesomplete/awesomplete.css"),
     includeScript("./includes/awesomplete/awesomplete.js"),
     includeScript("./includes/remove-branding.js"),
@@ -42,7 +43,6 @@ shinyUI(
             div(class="form-group shiny-input-container",
                 tags$input(id="text", type="text",
                            class="awesomplete form-control",
-                           style="width:25em;",
                            value="", autofocus="true", 'data-multiple'="true",
                            'data-minchars'="1" , 'data-autofirst'="true",
                            'data-list'= paste(scan(file = "./data/common-english-words",

@@ -1,0 +1,24 @@
+/*
+Fix text input widths
+Code from Maciej Szymkiewicz
+https://gist.github.com/zero323/a5cc24af4311fba2cd3e
+*/
+
+/*
+Every textInput is wrapped with div with following classes
+Maximum width is by defult 595px. We can change it to 100% 
+of the parent element
+*/
+
+.form-group.shiny-input-container {
+width: 100%
+}
+
+.awesomplete {
+width: 100%
+}
+
+/* # matches id of the element -> inputId from textInput */
+#text  {
+width: 100%  
+}
