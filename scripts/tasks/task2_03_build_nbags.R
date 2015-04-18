@@ -69,10 +69,27 @@ microbenchmark::microbenchmark(
 
 
 
+# Add words from the quizzes to the bagg
+quiz2 <- c("when", "breathe", "want", "be", "air", "for", "ll", "there", 
+           "live", "guy", "at", "my", "table", "s", "wife", "got", "up", 
+           "go", "bathroom", "asked", "about", "dessert", "he", "started", 
+           "telling", "me", "his", "give", "anything", "see", "arctic", 
+           "monkeys", "this", "talking", "your", "mom", "has", "same", "effect", 
+           "as", "hug", "helps", "reduce", "were", "holland", "{digits}", 
+           "inch", "away", "but", "had", "time", "take", "just", "all", 
+           "these", "questions", "answered", "presentation", "evidence", 
+           "jury", "settle", "can", "deal", "with", "unsymetrical", "things", 
+           "even", "hold", "an", "uneven", "number", "bags", "groceries", 
+           "each", "every", "is", "perfect", "bottom", "m", "thankful", 
+           "childhood", "was", "filled", "imagination", "bruises", "playing", 
+           "how", "people", "are", "almost", "adam", "sandler")
+
+
+
+
 microbenchmark::microbenchmark(
   times = 1,
-  n2_bags <- nbags(token_all, n = 2L, ref = unique(words$word),
-                    aggressive.gc = TRUE)
+  n2_bags <- nbags(token_all, n = 2L, ref = unique(c(words$word, quiz2)))
 )
 
 setkey(n2_bags, t1, t2)
