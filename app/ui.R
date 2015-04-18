@@ -19,6 +19,7 @@ shinyUI(
     includeCSS("./includes/awesomplete/awesomplete.css"),
     includeScript("./includes/awesomplete/awesomplete.js"),
     includeScript("./includes/remove-branding.js"),
+    includeScript("./includes/keypress.js"),
   fixedPage(
     div(style="width:100%;min-height:50px;background:#216699;overflow:overlay;",
         span(style=paste0("font-family:\"Open Sans\",\"Helvetica Neue\",",
