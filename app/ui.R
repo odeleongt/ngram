@@ -14,6 +14,7 @@ library(package = markdown)
 
 shinyUI(
   bootstrapPage(
+    includeCSS("./includes/custom-styles.css"),
     includeCSS("./includes/maciej-text-width.css"),
     includeCSS("./includes/awesomplete/awesomplete.css"),
     includeScript("./includes/awesomplete/awesomplete.js"),
@@ -37,22 +38,45 @@ shinyUI(
       tabPanel(id = "app",
         title = "App",
         includeMarkdown(path = "./content/app.md"),
-        fluidRow(
-          column(
-            width = 6,
-            div(class="form-group shiny-input-container",
-                tags$input(id="text", type="text",
-                           class="awesomplete form-control",
-                           value="", autofocus="true", 'data-multiple'="true",
-                           'data-minchars'="1" , 'data-autofirst'="true",
-                           'data-list'= paste(scan(file = "./data/common-english-words",
-                                                   what = "character"), collapse = " "))
-            )),
-          column(
-            width = 6,
-            wellPanel(
-              div(tags$label("Input text")),
-              textOutput('text'))))),
+        column(
+          width = 8,
+          fixedRow(
+            column(
+              width = 12,
+              actionButton(inputId = "pred1",  label = textOutput("pred1_label"),
+                           icon = span(class="badge", 1, style = "float:left;"),
+                           style = "font-weight: bolder; float:left; background: #FFCCCC;")
+            ),
+            column(
+              width = 6,
+              actionButton(inputId = "pred2",  label = textOutput("pred2_label"),
+                           icon = span(class="badge", 2, style = "float:left;"),
+                           style = "float:left;")
+            ),
+            column(
+              width = 6,
+              actionButton(inputId = "pred3",  label = textOutput("pred3_label"),
+                           icon = span(class="badge", 3, style = "float:left;"),
+                           style = "float:left;")
+            )
+          ),
+          fluidRow(
+            column(
+              width = 12,
+              div(class="form-group shiny-input-container",
+                  tags$input(
+                    id="text", type="text",
+                    class="awesomplete form-control",
+                    value="", autofocus="true", 'data-multiple'="true",
+                    'data-minchars'="1" , 'data-autofirst'="true",
+                    'data-list'= paste(scan(file = "./data/common-english-words",
+                                            what = "character"), collapse = " "))
+              )))),
+        column(
+          width = 4,
+          wellPanel(
+            div(tags$label("Input text")),
+            textOutput('text')))),
       tabPanel(
         title = "About the model",
         includeMarkdown(path = "./content/about_model.md")),
