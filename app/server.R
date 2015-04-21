@@ -72,11 +72,22 @@ shinyServer(
     #*-------------------------------------------------------------------------*
     observe({
       if(values$predict){
-        values$text <- clean_text(input$text)
-        isolate(updateTextInput(session, "text", value = paste0(values$text, " ")))
-        prediction <- get_prediction(values$text)
-        isolate(values$predictions  <- prediction$words)
-        values$predict <- FALSE
+        # Perform all predictions in an isolated environment
+        # (only triggered on values$predict)
+        isolate({
+          # Clean and tokenize
+          values$text <- clean_text(input$text)
+          values$tokens <- unlist(strsplit(x = values$text, split = "[[:space:]]+"))
+          
+          # Predict
+          prediction <- get_prediction(values$tokens)
+          isolate(values$predictions  <- prediction$words)
+          
+          # Toggle prediction
+          values$predict <- FALSE
+          updateTextInput(session, "text",
+                          value = gsub("[[:space:]]+$", "", input$text))
+        })
       }
     })
     
