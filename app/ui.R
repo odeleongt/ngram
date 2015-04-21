@@ -34,20 +34,34 @@ shinyUI(
     tabsetPanel(
       selected = "App",
       tabPanel(
-        title = "Instructions",
-        includeMarkdown("./content/instructions.md")),
+        title = "Information",
+        tabsetPanel(
+          selected = "Instructions",
+          tabPanel(
+            title = "Instructions",
+            includeMarkdown("./content/instructions.md")),
+          tabPanel(
+            title = "About the model",
+            includeMarkdown(path = "./content/about_model.md")),
+          tabPanel(
+            title = "Components",
+            includeMarkdown(path = "./content/components.md")),
+          tabPanel(
+            title = "Collaborating",
+            includeMarkdown(path = "./content/collaborating.md")),
+          tabPanel(
+            title = "About the author",
+            includeMarkdown(path = "./content/about_author.md")),
+          tabPanel(
+            title = "Acknowledgments",
+            includeMarkdown(path = "./content/acknowledgments.md"))
+      )),
       tabPanel(id = "app",
         title = "App",
         includeMarkdown(path = "./content/app.md"),
         column(
           width = 8,
           fixedRow(
-            column(
-              width = 12,
-              actionButton(inputId = "pred1",  label = textOutput("pred1_label"),
-                           icon = span(class="badge", 1, style = "float:left;"),
-                           style = "font-weight: bolder; float:left; background: #FFCCCC;")
-            ),
             column(
               width = 6,
               actionButton(inputId = "pred2",  label = textOutput("pred2_label"),
@@ -59,6 +73,12 @@ shinyUI(
               actionButton(inputId = "pred3",  label = textOutput("pred3_label"),
                            icon = span(class="badge", 3, style = "float:left;"),
                            style = "float:left;")
+            ),
+            column(
+              width = 12,
+              actionButton(inputId = "pred1",  label = textOutput("pred1_label"),
+                           icon = span(class="badge", 1, style = "float:left;"),
+                           style = "font-weight: bolder; float:left; background: #FFCCCC;")
             )
           ),
           fluidRow(
@@ -77,22 +97,7 @@ shinyUI(
           width = 4,
           wellPanel(
             div(tags$label("Input text")),
-            textOutput('text')))),
-      tabPanel(
-        title = "About the model",
-        includeMarkdown(path = "./content/about_model.md")),
-      tabPanel(
-        title = "Components",
-        includeMarkdown(path = "./content/components.md")),
-      tabPanel(
-        title = "Collaborating",
-        includeMarkdown(path = "./content/collaborating.md")),
-      tabPanel(
-        title = "About the author",
-        includeMarkdown(path = "./content/about_author.md")),
-      tabPanel(
-        title = "Acknowledgments",
-        includeMarkdown(path = "./content/acknowledgments.md"))
+            textOutput('text'))))
     )
   ))
 )
