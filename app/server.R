@@ -1,17 +1,36 @@
 updateInput <- function(input, session, prediction) {
-  updateTextInput(session, "text", value = paste(input$text, prediction))
+  updateTextInput(session = session, inputId = "text",
+                  value = paste0(input$text, " ", prediction, " "))
 }
 
 get_prediction <- function(sentence,  i=1) {
   list(words = sample(c("the", "to", "and", "a", "I", "of", "in", "it", "that", "for")))
 }
 
+# Source helper functions
+source(file = "./R/clean_text.R")
+
 shinyServer(
   function(input, output, session) {
-    output$text <- renderText({ paste0("{", input$text, "}") })
+    #*-------------------------------------------------------------------------*
+    # Set list for reactive values
+    #*-------------------------------------------------------------------------*
     
     values <- reactiveValues()
+    values$predict <- FALSE
     values$predictions  <- get_prediction("")$words
+    
+    
+    #*-------------------------------------------------------------------------*
+    # Predict when the input text ends in space(s)
+    #*-------------------------------------------------------------------------*
+    
+    observe({
+      if(grepl("[[:space:]]+$", input$text)){
+        values$predict <- TRUE
+      }
+    })
+    
     
     #*-------------------------------------------------------------------------*
     # Add observe block for each button
@@ -21,33 +40,44 @@ shinyServer(
     observe({
       if(input$pred1 == 0) return()
       isolate({
-        updateTextInput(session, "text",
-                        value = paste(input$text, values$predictions[1]))
+        updateInput(input, session, values$predictions[1])
       })
+      values$predict <- FALSE
     })
     
     # Prediction 2
     observe({
       if(input$pred2 == 0) return()
       isolate({
-        updateTextInput(session, "text",
-                        value = paste(input$text, values$predictions[2]))
+        updateInput(input, session, values$predictions[2])
       })
+      values$predict <- FALSE
     })
     
     # Prediction 3
     observe({
       if(input$pred3 == 0) return()
       isolate({
-        updateTextInput(session, "text",
-                        value = paste(input$text, values$predictions[3]))
+        updateInput(input, session, values$predictions[3])
       })
+      values$predict <- FALSE
     })
     
+    
+
+        
+    
+    #*-------------------------------------------------------------------------*
+    # Predict
+    #*-------------------------------------------------------------------------*
     observe({
-      text <- input$text
-      prediction <- get_prediction(text)
-      isolate(values$predictions  <- prediction$words)
+      if(values$predict){
+        values$text <- clean_text(input$text)
+        isolate(updateTextInput(session, "text", value = paste0(values$text, " ")))
+        prediction <- get_prediction(values$text)
+        isolate(values$predictions  <- prediction$words)
+        values$predict <- FALSE
+      }
     })
     
     
@@ -62,12 +92,20 @@ shinyServer(
     
     # Prediction 2
     output$pred2_label <- renderText({
-      values$predictions[1]
+      values$predictions[2]
     })
     
     # Prediction 3
     output$pred3_label <- renderText({
-      values$predictions[1]
+      values$predictions[3]
     })
+    
+    
+    
+    #*-------------------------------------------------------------------------*
+    # Update output
+    #*-------------------------------------------------------------------------*
+    
+    output$text <- renderText({ paste0("{", values$text, "}") })
   }
 )
