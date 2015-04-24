@@ -3,12 +3,9 @@ updateInput <- function(input, session, prediction) {
                   value = paste0(input$text, " ", prediction, " "))
 }
 
-get_prediction <- function(sentence,  i=1) {
-  list(words = sample(c("the", "to", "and", "a", "I", "of", "in", "it", "that", "for")))
-}
-
 # Source helper functions
 source(file = "./R/clean_text.R")
+source(file = "./R/predict.R")
 
 shinyServer(
   function(input, output, session) {
@@ -18,7 +15,9 @@ shinyServer(
     
     values <- reactiveValues()
     values$predict <- FALSE
-    values$predictions  <- get_prediction("")$words
+    values$predictions  <-
+      xedni[sample(x = 1:nrow(xedni), size = 3,
+                   prob = 1 - (xedni$level / sum(xedni$level))), word]
     
     
     #*-------------------------------------------------------------------------*
@@ -81,7 +80,7 @@ shinyServer(
           
           # Predict
           prediction <- get_prediction(values$tokens)
-          isolate(values$predictions  <- prediction$words)
+          isolate(values$predictions  <- prediction)
           
           # Toggle prediction
           values$predict <- FALSE

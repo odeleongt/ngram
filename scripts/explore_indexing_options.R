@@ -8,6 +8,9 @@ library(package = data.table)
 library(package = ff)
 library(package == ffbase)
 
+# Set ff options
+options(fftempdir = "C:/ffstore")
+
 # All n-grams
 load(file = "./data/processed/02_ngrams_all.RData")
 

@@ -28,9 +28,10 @@ thesaurus-api-key
 *.rds
 *.ffdata
 
-# Ignore raw text data
+# Ignore raw data
 data/raw/final
 *.zip
+*.ff
 
 # shinyapps files
 rsconnect
