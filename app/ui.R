@@ -92,7 +92,17 @@ shinyUI(
                     'data-minchars'="1" , 'data-autofirst'="true",
                     'data-list'= paste(scan(file = "./data/common-english-words",
                                             what = "character"), collapse = " "))
-              )))),
+              ))),
+          fixedRow(
+            column(
+              width = 6,
+              actionButton(inputId = "clear", label = "Clear input")
+            ),
+            column(
+              width = 6,
+              actionButton(inputId = "random", label = "Random options")
+            )
+          )),
         column(
           width = 4,
           wellPanel(

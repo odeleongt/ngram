@@ -62,6 +62,24 @@ shinyServer(
       values$predict <- FALSE
     })
     
+    # Clear input
+    observe({
+      if(input$clear == 0) return()
+      isolate({
+        updateTextInput(session = session, inputId = "text", value = "")
+        values$text <- ""
+      })
+    })
+    
+    # Fill random words for prediction buttons
+    observe({
+      if(input$random == 0) return()
+      values$predictions  <-
+        xedni[sample(x = 1:nrow(xedni), size = 3,
+                     prob = 1 - (xedni$level / sum(xedni$level))), word]
+      values$predict <- FALSE
+    })
+    
     
 
         
