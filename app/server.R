@@ -7,7 +7,7 @@ updateInput <- function(input, session, prediction) {
 source(file = "./R/clean_text.R")
 source(file = "./R/predict.R")
 
-get_prediction("", NULL)
+get_prediction(0, NULL)
 
 shinyServer(
   function(input, output, session) {
@@ -101,8 +101,27 @@ shinyServer(
           values$text <- clean_text(input$text)
           values$tokens <- unlist(strsplit(x = values$text, split = "[[:space:]]+"))
           
+          #*---------------------------------------------------------------------------*
+          # Prepare tokens
+          #*---------------------------------------------------------------------------*
+          
+          # Use character vector
+          tokens <- unlist(values$tokens)
+          cat("Got tokens:\n", tokens, "\n\n", sep=" ")
+          
+          # Index them
+          indexed <- index[list(tokens), level]
+          
+          # Warn user of unknown input
+          if(any(is.na(tail(x = indexed, n = 3)))){
+            values$text <- 
+                paste0("Tokens in the following list were not recognized and were ignored:",
+                       "[", paste(tokens[is.na(indexed)], collapse = ", "), "]",
+                       "Are you sure they are correct?")
+          }
+          
           # Predict
-          prediction <- get_prediction(values$tokens, output)
+          prediction <- get_prediction(indexed, output)
           isolate(values$predictions  <- prediction)
           
           # Toggle prediction

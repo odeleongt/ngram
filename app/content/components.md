@@ -6,11 +6,6 @@ The following is a list of these components
 (full copies of the license agreements used by these components are included in their respective repositories):
 
 
-- [`awesomplete`](https://leaverou.github.io/awesomplete/),
-a lightweight autocomplete widget written in `js` by Lea Verou.
-It actually uses the [Expat](https://directory.fsf.org/wiki/License:Expat) license,
-which is usually (and ambiguously) referred to as the _MIT License_.
-
 - [`ff`](http://cran.r-project.org/web/packages/ff/),
 a package to use data stored on disk. Reduces memory use and speeds data access.
 Only pointers to the disk-stored data are loaded on application startup,

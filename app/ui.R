@@ -16,8 +16,6 @@ shinyUI(
   bootstrapPage(
     includeCSS("./includes/custom-styles.css"),
     includeCSS("./includes/maciej-text-width.css"),
-    includeCSS("./includes/awesomplete/awesomplete.css"),
-    includeScript("./includes/awesomplete/awesomplete.js"),
     includeScript("./includes/remove-branding.js"),
     includeScript("./includes/keypress.js"),
   fixedPage(
@@ -85,13 +83,10 @@ shinyUI(
             column(
               width = 12,
               div(class="form-group shiny-input-container",
-                  tags$input(
+                  tags$textarea(
                     id="text", type="text",
-                    class="awesomplete form-control",
-                    value="", autofocus="true", 'data-multiple'="true",
-                    'data-minchars'="1" , 'data-autofirst'="true",
-                    'data-list'= paste(scan(file = "./data/common-english-words",
-                                            what = "character"), collapse = " "))
+                    class="form-control",
+                    value="", autofocus="true")
               ))),
           fixedRow(
             column(
@@ -107,11 +102,6 @@ shinyUI(
               actionButton(inputId = "random", label = "Random options")
             )
           )),
-        column(
-          width = 4,
-          wellPanel(
-            div(tags$label("Input text")),
-            textOutput('text'))),
         tags$hr(),
         fixedRow(
           column(
@@ -119,7 +109,12 @@ shinyUI(
             wellPanel(
               div(tags$label("Likelihood for all top predictions")),
               tableOutput('predictions'))
-          )
+          ),
+          column(
+            width = 4,
+            wellPanel(
+              div(tags$label("Input text")),
+              textOutput('text')))
         ))
     )
   ))

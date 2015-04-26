@@ -22,31 +22,23 @@ top <- index$word[index$level %in% 1:3]
 # Prediction function
 get_prediction <- function(tokens, output){
   
-  #*---------------------------------------------------------------------------*
-  # Prepare tokens
-  #*---------------------------------------------------------------------------*
-  
-  # Use character vector
-  tokens <- unlist(tokens)
-  cat("Got tokens:\n", tokens, "\n\n", sep=" ")
-  
-  # Index them
-  tokens <- as.ushort(na.omit(index[tokens, level]))
+  # Remove unknown tokens
+  indexed <- as.ushort(na.omit(tokens))
   
   # Ensure proper length
-  if(length(tokens) < 3){
+  if(length(indexed) < 3){
     # Fill up with "no-value" 16657
-    tokens <- as.ushort(c(rep(16657, 3-length(tokens)), tokens))
+    indexed <- as.ushort(c(rep(16657, 3-length(indexed)), indexed))
   } else {
     # Select last tokens
-    tokens <- tail(x = tokens, n = 3)
+    indexed <- tail(x = indexed, n = 3)
   }
   
   
   #*---------------------------------------------------------------------------*
   # Handle empty input
   #*---------------------------------------------------------------------------*
-  if(all(tokens == 16657)){
+  if(all(indexed == 16657)){
     return(top)
   }
   
@@ -62,9 +54,9 @@ get_prediction <- function(tokens, output){
   
   # Index
   for (i in chunk(1,N,n)){
-    fn3[i] <- (nall_ff$n3[i] == tokens[1]) | (nall_ff$params[i] %in% as.quad(c(3, 2)))
-    fn2[i] <- (nall_ff$n2[i] == tokens[2]) | (nall_ff$params[i] == as.quad(2))
-    fn1[i] <- nall_ff$n1[i] == tokens[3]
+    fn3[i] <- (nall_ff$n3[i] == indexed[1]) | (nall_ff$params[i] %in% as.quad(c(3, 2)))
+    fn2[i] <- (nall_ff$n2[i] == indexed[2]) | (nall_ff$params[i] == as.quad(2))
+    fn1[i] <- nall_ff$n1[i] == indexed[3]
     }
   biti <- fn3 & fn2 & fn1
   
