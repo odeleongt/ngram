@@ -63,22 +63,22 @@ shinyUI(
           width = 8,
           fixedRow(
             column(
-              width = 6,
+              width = 4,
+              actionButton(inputId = "pred1",  label = textOutput("pred1_label"),
+                           icon = span(class="badge", 1, style = "float:left;"),
+                           style = "font-weight: bolder; float:left; background: #FFCCCC;")
+            ),
+            column(
+              width = 4,
               actionButton(inputId = "pred2",  label = textOutput("pred2_label"),
                            icon = span(class="badge", 2, style = "float:left;"),
                            style = "float:left;")
             ),
             column(
-              width = 6,
+              width = 4,
               actionButton(inputId = "pred3",  label = textOutput("pred3_label"),
                            icon = span(class="badge", 3, style = "float:left;"),
                            style = "float:left;")
-            ),
-            column(
-              width = 12,
-              actionButton(inputId = "pred1",  label = textOutput("pred1_label"),
-                           icon = span(class="badge", 1, style = "float:left;"),
-                           style = "font-weight: bolder; float:left; background: #FFCCCC;")
             )
           ),
           fluidRow(
@@ -95,11 +95,15 @@ shinyUI(
               ))),
           fixedRow(
             column(
-              width = 6,
+              width = 4,
+              actionButton(inputId = "predict", label = "Predict!")
+            ),
+            column(
+              width = 4,
               actionButton(inputId = "clear", label = "Clear input")
             ),
             column(
-              width = 6,
+              width = 4,
               actionButton(inputId = "random", label = "Random options")
             )
           )),
@@ -107,7 +111,16 @@ shinyUI(
           width = 4,
           wellPanel(
             div(tags$label("Input text")),
-            textOutput('text'))))
+            textOutput('text'))),
+        tags$hr(),
+        fixedRow(
+          column(
+            width = 8,
+            wellPanel(
+              div(tags$label("Likelihood for all top predictions")),
+              tableOutput('predictions'))
+          )
+        ))
     )
   ))
 )

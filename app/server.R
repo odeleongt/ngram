@@ -1,11 +1,13 @@
 updateInput <- function(input, session, prediction) {
   updateTextInput(session = session, inputId = "text",
-                  value = paste0(input$text, " ", prediction, " "))
+                  value = paste0(input$text, prediction, " "))
 }
 
 # Source helper functions
 source(file = "./R/clean_text.R")
 source(file = "./R/predict.R")
+
+get_prediction("", NULL)
 
 shinyServer(
   function(input, output, session) {
@@ -15,10 +17,7 @@ shinyServer(
     
     values <- reactiveValues()
     values$predict <- FALSE
-    values$predictions  <-
-      xedni[sample(x = 1:nrow(xedni), size = 3,
-                   prob = 1 - (xedni$level / sum(xedni$level))), word]
-    
+    values$predictions  <- c("", "", "")
     
     #*-------------------------------------------------------------------------*
     # Predict when the input text ends in space(s)
@@ -64,6 +63,12 @@ shinyServer(
     
     # Clear input
     observe({
+      if(input$predict == 0) return()
+      values$predict <- TRUE
+    })
+    
+    # Clear input
+    observe({
       if(input$clear == 0) return()
       isolate({
         updateTextInput(session = session, inputId = "text", value = "")
@@ -97,13 +102,11 @@ shinyServer(
           values$tokens <- unlist(strsplit(x = values$text, split = "[[:space:]]+"))
           
           # Predict
-          prediction <- get_prediction(values$tokens)
+          prediction <- get_prediction(values$tokens, output)
           isolate(values$predictions  <- prediction)
           
           # Toggle prediction
           values$predict <- FALSE
-          updateTextInput(session, "text",
-                          value = gsub("[[:space:]]+$", "", input$text))
         })
       }
     })
@@ -135,5 +138,6 @@ shinyServer(
     #*-------------------------------------------------------------------------*
     
     output$text <- renderText({ paste0("{", values$text, "}") })
+    session$sendCustomMessage(type='jsCode', list(value = "clear_branding()"))
   }
 )
