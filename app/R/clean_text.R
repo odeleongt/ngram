@@ -115,6 +115,9 @@ clean_text <- function(text){
   repl <- " "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
+  # Always return a character
+  if(length(fixed_text) == 0) fixed_text <- ""
+  
   # Returned the fixed text
   return(fixed_text)
 }

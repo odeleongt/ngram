@@ -24,12 +24,12 @@ clean_text <- function(text){
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
   # Remove punctuation (keep hashtags)
-  punct <- "[^#a-zA-Z0-9[:space:]]+"
+  punct <- "[^#a-zA-Z0-9{}[:space:]]+"
   repl <- " "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
   # Remove lone apostrophes
-  punct <- "[[:space:]]\t[^a-zA-Z]*\t[[:space:]]"
+  punct <- "[[:space:]]\t[^a-zA-Z{}]*\t[[:space:]]"
   repl <- " "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
   
@@ -114,6 +114,9 @@ clean_text <- function(text){
   punct <- "[[:space:]]*[^a-zA-Z {}][[:space:]]*"
   repl <- " "
   fixed_text <- gsub(pattern = punct, replacement = repl, x = fixed_text)
+  
+  # Always return a character
+  if(length(fixed_text) == 0) fixed_text <- ""
   
   # Returned the fixed text
   return(fixed_text)
