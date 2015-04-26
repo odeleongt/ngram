@@ -45,7 +45,7 @@ shinyServer(
     
     # Prediction 2
     observe({
-      if(input$pred2 == 0) return()
+      if(input$pred2 == 0 | !"more" %in% input$options) return()
       isolate({
         updateInput(input, session, values$predictions[2])
       })
@@ -54,7 +54,7 @@ shinyServer(
     
     # Prediction 3
     observe({
-      if(input$pred3 == 0) return()
+      if(input$pred3 == 0 | !"more" %in% input$options) return()
       isolate({
         updateInput(input, session, values$predictions[3])
       })

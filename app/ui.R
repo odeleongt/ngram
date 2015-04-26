@@ -68,15 +68,17 @@ shinyUI(
             ),
             column(
               width = 4,
-              actionButton(inputId = "pred2",  label = textOutput("pred2_label"),
-                           icon = span(class="badge", 2, style = "float:left;"),
-                           style = "float:left;")
+              conditionalPanel(condition = "$.inArray('more', input.options) > -1",
+                actionButton(inputId = "pred2",  label = textOutput("pred2_label"),
+                             icon = span(class="badge", 2, style = "float:left;"),
+                             style = "float:left;"))
             ),
             column(
               width = 4,
-              actionButton(inputId = "pred3",  label = textOutput("pred3_label"),
-                           icon = span(class="badge", 3, style = "float:left;"),
-                           style = "float:left;")
+              conditionalPanel(condition = "$.inArray('more', input.options) > -1",
+                actionButton(inputId = "pred3",  label = textOutput("pred3_label"),
+                             icon = span(class="badge", 3, style = "float:left;"),
+                             style = "float:left;"))
             )
           ),
           fluidRow(
@@ -102,7 +104,17 @@ shinyUI(
               actionButton(inputId = "random", label = "Random options")
             )
           )),
+        column(
+          width = 4,
+          wellPanel(
+            checkboxGroupInput(inputId = "options", label = NULL,
+                               choices = c("Additional predictions" = "more",
+                                           "Show details" = "gimeh"),
+                               selected = "censor")
+          )
+        ),
         tags$hr(),
+        conditionalPanel(condition = "$.inArray('gimeh', input.options) > -1",
         fixedRow(
           column(
             width = 8,
@@ -115,7 +127,7 @@ shinyUI(
             wellPanel(
               div(tags$label("Input text")),
               textOutput('text')))
-        ))
+        )))
     )
   ))
 )

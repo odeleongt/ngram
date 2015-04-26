@@ -13,8 +13,9 @@ like
 <div>prediction</div></button></div>
 </br></br>
 
-and two additional words are provided as suggestions.
-You can **click the red prediction button** or the _grey suggestion buttons_
+If you enable the `Additional predictions` checkbox, two additional words are provided as suggestions.
+You can **click the red prediction button**
+(or the _grey suggestion buttons_ when you have enabled additional suggestions)
 to add the word to the text input and predict the next word.
 If you are using Google Chrome as your browser,
 pressing the numbers 1-3 also select the relevant prediction or suggestion
