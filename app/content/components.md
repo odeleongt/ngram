@@ -11,6 +11,14 @@ a lightweight autocomplete widget written in `js` by Lea Verou.
 It actually uses the [Expat](https://directory.fsf.org/wiki/License:Expat) license,
 which is usually (and ambiguously) referred to as the _MIT License_.
 
+- [`ff`](http://cran.r-project.org/web/packages/ff/),
+a package to use data stored on disk. Reduces memory use and speeds data access.
+Only pointers to the disk-stored data are loaded on application startup,
+and data is read as needed.
+Daniel Adler, Christian Gläser, Oleg Nenadic, Jens Oehlschlägel and Walter Zucchini (2014).
+ff: memory-efficient storage of large data on disk and fast access functions.
+R package version 2.2-13. http://CRAN.R-project.org/package=ff
+
 
 - [`data.table`](https://github.com/Rdatatable/data.table),
 a package for efficient manipulation of data in-memory.
