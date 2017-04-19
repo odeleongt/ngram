@@ -1,0 +1,13 @@
+.btn {
+    display:inline-block;
+    width: 100%;
+    background: lightgrey;
+}
+.col-sm-4 {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.col-sm-12 {
+    padding-right: 0px;
+    padding-left: 0px;
+}
